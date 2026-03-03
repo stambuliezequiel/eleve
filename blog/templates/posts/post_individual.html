@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-wrap">
+    <div id="fh5co-work" style="background-color: #fdfdfd; padding-top: 40px;">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2"> <h2 class="text-center" style="font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: 1px;">
+                    {{ posts.titulo }}
+                </h2>
+                
+                <div class="text-center" style="margin-bottom: 30px;">
+                    <span style="color: #999; text-transform: uppercase; font-size: 12px; letter-spacing: 2px;">
+                        {{ posts.categoria }} — {{ posts.fecha|date:"d M, Y" }}
+                    </span>
+                </div>
+
+                {% if posts.imagen %}
+                <div class="perfume-hero-img">
+                    <img src="{{ posts.imagen.url }}" class="img-responsive" alt="{{ posts.titulo }}" 
+                         style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin: 0 auto;">
+                </div>
+                {% endif %}
+
+                <div class="blog-text" style="font-size: 18px; line-height: 1.8; color: #444; margin-top: 40px;">
+                    <p class="lead" style="font-style: italic; color: #777; border-left: 3px solid #333; padding-left: 15px;">
+                        {{ posts.resumen }}
+                    </p>
+                    <hr style="width: 50px; border-top: 2px solid #333; margin: 40px auto;">
+                    {{ posts.texto|linebreaks }}
+                </div>
+                
+                <div class="text-center" style="margin-top: 50px;">
+                    <a href="https://wa.me/5493624026274?text=Hola!%20Me%20interesa%20el%20perfume:%20{{ posts.titulo }}" 
+                       class="btn-whatsapp-comprar">
+                        <i class="fab fa-whatsapp"></i> Consultar por este perfume
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

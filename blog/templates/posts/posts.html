@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Perfumes {% endblock title %}
+
+{% block content %}
+<div class="container-wrap" style="background-color: #f9f9f9;"> <div id="fh5co-work" style="padding: 40px 0;">
+        <div class="text-center" style="margin-bottom: 40px;">
+            <h3 style="color: #333; text-transform: uppercase; letter-spacing: 2px; font-size: 1.2rem;">Filtrar por</h3>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <a class="btn-filtro" href="{% url 'apps.posts:posts' %}?orden=reciente">Más Recientes</a>
+                <a class="btn-filtro" href="{% url 'apps.posts:posts' %}?orden=antiguo">Más Antiguos</a>
+                <a class="btn-filtro" href="{% url 'apps.posts:posts' %}?orden=categoria">Categorías</a>
+                <a class="btn-filtro" href="{% url 'apps.posts:posts' %}">Todas</a>
+            </div>
+        </div>
+
+        <div class="container-fluid" style="padding: 0 50px;">
+            <div class="row"> 
+                {% for i in posts %}
+                    <div class="col-md-4 col-sm-6 animate-box" style="margin-bottom: 30px;">
+                        <div class="card-perfume-wrapper">
+                            <a href="{% url 'apps.posts:post_individual' i.id %}" class="work-link">
+                                <div class="work-img" style="background-image: url('{{ i.imagen.url }}');"></div>
+                                
+                                <div class="desc-luxury">
+                                    <span class="cat-tag">{{ i.categoria }}</span>
+                                    <h3>{{ i.titulo }}</h3>
+                                    <p class="subtitle">{{ i.subtitulo }}</p>
+                                    <span class="ver-mas">VER DETALLE</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center">
+                        <h2 style="color: #999;">No hay perfumes disponibles por ahora.</h2>
+                    </div>
+                {% endfor %}
+            </div> 
+        </div>
+    </div>
+</div>
+{% endblock %}

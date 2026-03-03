@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="main-nosotras"> 
+      <div class="container"> 
+        <h1>{{ nosotras.titulo }}</h1>
+        <div class="texto-nosotras">
+            {{ nosotras.contenido|linebreaks }}
+        </div>
+        <div class="contacto-nosotras">
+            <div style="margin-top: 30px;">
+    <p>También puedes seguir nuestro trabajo diario aquí:</p>
+    <a href="https://www.instagram.com/milac.esteticaybienestar/" target="_blank" class="insta-link">
+        <i class="fab fa-instagram"></i> @milac.esteticaybienestar
+    </a>
+</div>
+
+</div>
+    </div>
+</main>
+{% endblock %}
