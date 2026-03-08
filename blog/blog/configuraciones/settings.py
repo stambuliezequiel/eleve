@@ -32,14 +32,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary_storage',         # 1. Debe ir ANTES que staticfiles y las apps de Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
-    'django.contrib.staticfiles',
-    'cloudinary',
+    'django.contrib.staticfiles',  # 2. WhiteNoise y Cloudinary se enganchan aquí
+    'cloudinary',                 # 3. La librería base
     'apps.posts',
     'apps.nosotras',
 ]
@@ -164,7 +164,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'GKUeYaRHCmDWdR48DISBazi3zEg',
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
