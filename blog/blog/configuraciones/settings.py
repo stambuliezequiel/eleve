@@ -11,26 +11,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 
-# Ruta absoluta basada en la ubicación de este archivo settings.py
-# configuraciones (parent) -> blog (parent) -> blog (parent) -> raíz
+# Configuramos BASE_DIR como un string (texto plano)
+# settings.py -> configuraciones -> blog -> raíz del proyecto
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Agregamos esta lógica para asegurarnos de que encuentre la carpeta static
-# Si el BASE_DIR actual no contiene la carpeta 'static', retrocedemos un nivel
-if not (BASE_DIR / 'static').exists():
-    BASE_DIR = BASE_DIR.parent
-
-print(f"DEBUG: El BASE_DIR corregido es: {BASE_DIR}")
-
-
-# Verificación extra para el Log de Render
-STATIC_FOLDER_PATH = os.path.join(BASE_DIR, 'static')
-if os.path.exists(STATIC_FOLDER_PATH):
-    print(f"✅ EXITO: Carpeta static encontrada en: {STATIC_FOLDER_PATH}")
-else:
-    print(f"❌ ERROR: No existe la carpeta static en {STATIC_FOLDER_PATH}")
-    # Listamos qué hay ahí para entender qué ve Render
-    print(f"DEBUG: Contenido de BASE_DIR: {os.listdir(BASE_DIR)}")
+# Imprimimos para ver en el log de Render si la ruta es correcta
+print(f"DEBUG: El BASE_DIR actual es: {BASE_DIR}")
 
 
 
@@ -140,11 +126,12 @@ USE_TZ = True
 
 
 
-# --- CONFIGURACIÓN DE ESTÁTICOS (CSS, JS) ---
+# --- Configuración de Estáticos ---
 STATIC_URL = '/static/'
-STATIC_ROOT = '/opt/render/project/src/blog/staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Usamos os.path.join porque BASE_DIR ahora es un string
 STATICFILES_DIRS = [
-    '/opt/render/project/src/blog/static',
+    os.path.join(BASE_DIR, 'static'),
 ]
 # WhiteNoise maneja el CSS
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
