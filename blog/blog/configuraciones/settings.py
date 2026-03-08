@@ -14,9 +14,10 @@ import os
 # Configuramos BASE_DIR como un string (texto plano)
 # settings.py -> configuraciones -> blog -> raíz del proyecto
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REPO_ROOT = os.path.dirname(BASE_DIR) 
 
-# Imprimimos para ver en el log de Render si la ruta es correcta
-print(f"DEBUG: El BASE_DIR actual es: {BASE_DIR}")
+print(f"DEBUG: El BASE_DIR es: {BASE_DIR}")
+print(f"DEBUG: El REPO_ROOT (donde debería estar static) es: {REPO_ROOT}")
 
 
 
@@ -134,7 +135,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Usamos os.path.join porque BASE_DIR ahora es un string
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(REPO_ROOT, 'static'),
 ]
 # WhiteNoise maneja el CSS
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
