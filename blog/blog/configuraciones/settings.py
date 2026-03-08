@@ -32,14 +32,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'cloudinary_storage',         # 1. Debe ir ANTES que staticfiles y las apps de Django
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',  # 2. WhiteNoise y Cloudinary se enganchan aquí
-    'cloudinary',                 # 3. La librería base
+    'cloudinary',
+    'django.contrib.staticfiles', # Debe ir después de cloudinary
     'apps.posts',
     'apps.nosotras',
 ]
