@@ -15,6 +15,10 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+# Agrega esto para depurar en los logs de Render (aparecerá al hacer deploy)
+print(f"DEBUG: El BASE_DIR actual es: {BASE_DIR}")
+print(f"DEBUG: Buscando estáticos en: {os.path.join(BASE_DIR, 'static')}")
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -123,51 +127,24 @@ USE_TZ = True
 
 
 
-STATIC_URL = 'static/'
-
-
+# --- CONFIGURACIÓN DE ESTÁTICOS (CSS, JS) ---
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_URL = 'media/'
-
-MEDIA_ROOT = '../blog/media/'
-
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
-}
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dkyclmyz8',
-    'API_KEY': '456411318782517',
-    'API_SECRET': 'GKUeYaRHCmDWdR48DISBazi3zEg',
-}
-
+# WhiteNoise maneja el CSS
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
+# --- CONFIGURACIÓN DE MEDIA (Imágenes de Perfumes) ---
+MEDIA_URL = '/media/'
+# Importante: Esto le dice a Django que use Cloudinary para los archivos de los modelos
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# --- CLOUDINARY CREDENTIALS ---
+# Usamos os.environ para que sea seguro en Render
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'dkyclmyz8'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '456411318782517'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'GKUeYaRHCmDWdR48DISBazi3zEg')
 }
