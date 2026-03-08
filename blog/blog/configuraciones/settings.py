@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Agregamos esta lógica para asegurarnos de que encuentre la carpeta static
 # Si el BASE_DIR actual no contiene la carpeta 'static', retrocedemos un nivel
@@ -142,12 +142,13 @@ USE_TZ = True
 
 # --- CONFIGURACIÓN DE ESTÁTICOS (CSS, JS) ---
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/opt/render/project/src/blog/staticfiles'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    '/opt/render/project/src/blog/static',
 ]
 # WhiteNoise maneja el CSS
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --- CONFIGURACIÓN DE MEDIA (Imágenes de Perfumes) ---
 MEDIA_URL = '/media/'
