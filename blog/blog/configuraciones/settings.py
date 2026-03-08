@@ -15,9 +15,12 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# Agrega esto para depurar en los logs de Render (aparecerá al hacer deploy)
-print(f"DEBUG: El BASE_DIR actual es: {BASE_DIR}")
-print(f"DEBUG: Buscando estáticos en: {os.path.join(BASE_DIR, 'static')}")
+# Agregamos esta lógica para asegurarnos de que encuentre la carpeta static
+# Si el BASE_DIR actual no contiene la carpeta 'static', retrocedemos un nivel
+if not (BASE_DIR / 'static').exists():
+    BASE_DIR = BASE_DIR.parent
+
+print(f"DEBUG: El BASE_DIR corregido es: {BASE_DIR}")
 
 
 
