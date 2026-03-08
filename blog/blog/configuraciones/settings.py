@@ -23,6 +23,16 @@ if not (BASE_DIR / 'static').exists():
 print(f"DEBUG: El BASE_DIR corregido es: {BASE_DIR}")
 
 
+# Verificación extra para el Log de Render
+STATIC_FOLDER_PATH = os.path.join(BASE_DIR, 'static')
+if os.path.exists(STATIC_FOLDER_PATH):
+    print(f"✅ EXITO: Carpeta static encontrada en: {STATIC_FOLDER_PATH}")
+else:
+    print(f"❌ ERROR: No existe la carpeta static en {STATIC_FOLDER_PATH}")
+    # Listamos qué hay ahí para entender qué ve Render
+    print(f"DEBUG: Contenido de BASE_DIR: {os.listdir(BASE_DIR)}")
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
