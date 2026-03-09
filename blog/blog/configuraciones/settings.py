@@ -129,23 +129,29 @@ USE_TZ = True
 
 
 
-# --- Configuración de Estáticos Dinámica ---
-# --- Configuración de Estáticos de Emergencia ---
+# --- Configuración de Estáticos ---
 STATIC_URL = '/static/'
 
-# Ruta absoluta basada en lo que CONFIRMÓ el log
-STATIC_ROOT = '/opt/render/project/src/blog/staticfiles'
+# Ruta donde se copiarán los archivos para que Render los sirva
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Donde Django busca tus archivos originales
 STATICFILES_DIRS = [
-    '/opt/render/project/src/blog/static',
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-# Desactivamos WhiteNoise temporalmente para ver si el problema es el storage
-# Comenta esta línea si la tenés:
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# ESTA ES LA LÍNEA QUE FALTA (Cloudinary la necesita con este nombre exacto)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Agregá esta línea para que Django no sea tan estricto con los nombres
-#WHITENOISE_KEEP_FILES_ON_REMOTE_STORAGE = True
+# Para Django 6.0+ también se usa esta nueva forma (poné ambas por seguridad)
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # --- CONFIGURACIÓN DE MEDIA (Imágenes de Perfumes) ---
 MEDIA_URL = '/media/'
