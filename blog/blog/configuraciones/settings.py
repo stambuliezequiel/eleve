@@ -130,31 +130,22 @@ USE_TZ = True
 
 
 # --- Configuración de Estáticos Dinámica ---
+# --- Configuración de Estáticos de Emergencia ---
 STATIC_URL = '/static/'
 
-# Intentamos encontrar la carpeta static de forma automática
-posibles_rutas = [
-    os.path.join(REPO_ROOT, 'static'),       # Opción 1: En la raíz
-    os.path.join(BASE_DIR, 'static'),        # Opción 2: Adentro de blog
-    os.path.join(BASE_DIR, 'blog', 'static') # Opción 3: Adentro de blog/blog
+# Ruta absoluta basada en lo que CONFIRMÓ el log
+STATIC_ROOT = '/opt/render/project/src/blog/staticfiles'
+
+STATICFILES_DIRS = [
+    '/opt/render/project/src/blog/static',
 ]
 
-STATICFILES_DIRS = []
-for ruta in posibles_rutas:
-    if os.path.exists(ruta):
-        STATICFILES_DIRS.append(ruta)
-        print(f"✅ CARPETA STATIC ENCONTRADA EN: {ruta}")
-
-# Si no encontró ninguna, forzamos la que debería ser para que no de error
-if not STATICFILES_DIRS:
-    print("❌ ERROR: No se encontró la carpeta static en ninguna ruta conocida.")
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# Cambiamos temporalmente el storage para forzar a Django a encontrar los archivos
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Desactivamos WhiteNoise temporalmente para ver si el problema es el storage
+# Comenta esta línea si la tenés:
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Agregá esta línea para que Django no sea tan estricto con los nombres
-WHITENOISE_KEEP_FILES_ON_REMOTE_STORAGE = True
+#WHITENOISE_KEEP_FILES_ON_REMOTE_STORAGE = True
 
 # --- CONFIGURACIÓN DE MEDIA (Imágenes de Perfumes) ---
 MEDIA_URL = '/media/'
