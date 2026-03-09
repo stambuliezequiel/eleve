@@ -141,7 +141,7 @@ STATICFILES_DIRS = [
 ]
 
 # ESTA ES LA LÍNEA QUE FALTA (Cloudinary la necesita con este nombre exacto)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Para Django 6.0+ también se usa esta nueva forma (poné ambas por seguridad)
 STORAGES = {
