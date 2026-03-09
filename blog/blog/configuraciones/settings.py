@@ -150,7 +150,11 @@ if not STATICFILES_DIRS:
     print("❌ ERROR: No se encontró la carpeta static en ninguna ruta conocida.")
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Cambiamos temporalmente el storage para forzar a Django a encontrar los archivos
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Agregá esta línea para que Django no sea tan estricto con los nombres
+WHITENOISE_KEEP_FILES_ON_REMOTE_STORAGE = True
 
 # --- CONFIGURACIÓN DE MEDIA (Imágenes de Perfumes) ---
 MEDIA_URL = '/media/'
