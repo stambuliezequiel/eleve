@@ -129,15 +129,27 @@ USE_TZ = True
 
 
 
-
-# --- Configuración de Estáticos ---
+# --- Configuración de Estáticos Dinámica ---
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# Usamos os.path.join porque BASE_DIR ahora es un string
-STATICFILES_DIRS = [
-    os.path.join(REPO_ROOT, 'static'),
+
+# Intentamos encontrar la carpeta static de forma automática
+posibles_rutas = [
+    os.path.join(REPO_ROOT, 'static'),       # Opción 1: En la raíz
+    os.path.join(BASE_DIR, 'static'),        # Opción 2: Adentro de blog
+    os.path.join(BASE_DIR, 'blog', 'static') # Opción 3: Adentro de blog/blog
 ]
-# WhiteNoise maneja el CSS
+
+STATICFILES_DIRS = []
+for ruta in posibles_rutas:
+    if os.path.exists(ruta):
+        STATICFILES_DIRS.append(ruta)
+        print(f"✅ CARPETA STATIC ENCONTRADA EN: {ruta}")
+
+# Si no encontró ninguna, forzamos la que debería ser para que no de error
+if not STATICFILES_DIRS:
+    print("❌ ERROR: No se encontró la carpeta static en ninguna ruta conocida.")
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --- CONFIGURACIÓN DE MEDIA (Imágenes de Perfumes) ---
