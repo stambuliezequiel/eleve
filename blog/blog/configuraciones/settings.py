@@ -129,14 +129,13 @@ USE_TZ = True
 
 
 
-# --- Configuración Definitiva de Estáticos ---
+# --- Configuración Manual de Emergencia ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Buscamos en la raíz del repo Y dentro de la carpeta del proyecto
 STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(BASE_DIR), 'static'), # Un nivel arriba de blog/
-    os.path.join(BASE_DIR, 'static'),                  # Adentro de blog/
+    '/opt/render/project/src/blog/static',
 ]
 
 # Imprimimos para ver qué está pasando en el log de Render
