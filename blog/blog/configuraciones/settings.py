@@ -131,27 +131,18 @@ USE_TZ = True
 
 
 
+#--- Configuración de Estáticos Final ---
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Intentamos capturar la carpeta static esté donde esté
-STATICFILES_DIRS = []
+# Según el log, la carpeta real está en blog/blog/static
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'blog', 'static'),
+]
 
-# Ruta 1: Al lado de manage.py (lo más probable según tus fotos)
-path1 = os.path.join(os.path.dirname(BASE_DIR), 'static')
-if os.path.exists(path1):
-    STATICFILES_DIRS.append(path1)
-
-# Ruta 2: Adentro de la carpeta blog
-path2 = os.path.join(BASE_DIR, 'static')
-if os.path.exists(path2):
-    STATICFILES_DIRS.append(path2)
-
-# Debug para ver en el log qué carpetas REALMENTE existen
-print(f"--- DEBUG ESTÁTICOS ---")
-print(f"¿Existe Ruta 1 ({path1})?: {os.path.exists(path1)}")
-print(f"¿Existe Ruta 2 ({path2})?: {os.path.exists(path2)}")
-print(f"Contenido de {os.path.dirname(BASE_DIR)}: {os.listdir(os.path.dirname(BASE_DIR))}")
+# Por si acaso, dejamos la ruta que el DEBUG dijo que "Existe"
+STATICFILES_DIRS.append(os.path.join(BASE_DIR, 'static'))
 
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
