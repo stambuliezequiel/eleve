@@ -140,9 +140,7 @@ STATICFILES_DIRS = [
 
 # Si lo anterior falla, agregamos la ruta absoluta que nos dio el log
 # (Render usa /opt/render/project/src/blog/static)
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATICFILES_DIRS += ['/opt/render/project/src/blog/static']
 
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
