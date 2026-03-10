@@ -129,18 +129,18 @@ USE_TZ = True
 
 
 
-# --- Configuración Final de Estáticos ---
+# --- Configuración Definitiva de Estáticos ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Forzamos la ruta que vimos en el log de Render
+# Buscamos en la raíz del repo Y dentro de la carpeta del proyecto
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(os.path.dirname(BASE_DIR), 'static'), # Un nivel arriba de blog/
+    os.path.join(BASE_DIR, 'static'),                  # Adentro de blog/
 ]
 
-# Si lo anterior falla, agregamos la ruta absoluta que nos dio el log
-# (Render usa /opt/render/project/src/blog/static)
-STATICFILES_DIRS += ['/opt/render/project/src/blog/static']
+# Imprimimos para ver qué está pasando en el log de Render
+print(f"Buscando estáticos en: {STATICFILES_DIRS}")
 
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
@@ -152,7 +152,6 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
-
 # --- CONFIGURACIÓN DE MEDIA (Imágenes de Perfumes) ---
 MEDIA_URL = '/media/'
 # Importante: Esto le dice a Django que use Cloudinary para los archivos de los modelos
