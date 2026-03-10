@@ -129,18 +129,21 @@ USE_TZ = True
 
 
 
-# --- Configuración de Estáticos ---
+# --- Configuración Final de Estáticos ---
 STATIC_URL = '/static/'
-
-# Ruta donde se copiarán los archivos para que Render los sirva
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Donde Django busca tus archivos originales
+# Forzamos la ruta que vimos en el log de Render
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# ESTA ES LA LÍNEA QUE FALTA (Cloudinary la necesita con este nombre exacto)
+# Si lo anterior falla, agregamos la ruta absoluta que nos dio el log
+# (Render usa /opt/render/project/src/blog/static)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 STORAGES = {
