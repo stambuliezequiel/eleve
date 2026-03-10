@@ -133,12 +133,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Buscamos en la raíz del repo Y dentro de la carpeta del proyecto
+# 1. CREAMOS la lista con la ruta basada en BASE_DIR
+# (Como BASE_DIR es la carpeta 'blog', usamos el nivel superior)
 STATICFILES_DIRS = [
-    '/opt/render/project/src/blog/static',
+    os.path.join(os.path.dirname(BASE_DIR), 'static'),
 ]
 
-# Imprimimos para ver qué está pasando en el log de Render
+# 2. Por las dudas, agregamos la ruta absoluta de Render
+STATICFILES_DIRS.append('/opt/render/project/src/static')
+
+# 3. Y por si acaso estuviera adentro de blog/
+STATICFILES_DIRS.append('/opt/render/project/src/blog/static')
+
 print(f"Buscando estáticos en: {STATICFILES_DIRS}")
 
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
