@@ -10,11 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
+from pathlib import Path
 
 # Configuramos BASE_DIR como un string (texto plano)
 # settings.py -> configuraciones -> blog -> raíz del proyecto
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 REPO_ROOT = os.path.dirname(BASE_DIR) 
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
 print(f"DEBUG: El BASE_DIR es: {BASE_DIR}")
 print(f"DEBUG: El REPO_ROOT (donde debería estar static) es: {REPO_ROOT}")
@@ -129,23 +131,27 @@ USE_TZ = True
 
 
 
-# --- Configuración Manual de Emergencia ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# 1. CREAMOS la lista con la ruta basada en BASE_DIR
-# (Como BASE_DIR es la carpeta 'blog', usamos el nivel superior)
-STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(BASE_DIR), 'static'),
-]
+# Intentamos capturar la carpeta static esté donde esté
+STATICFILES_DIRS = []
 
-# 2. Por las dudas, agregamos la ruta absoluta de Render
-STATICFILES_DIRS.append('/opt/render/project/src/static')
+# Ruta 1: Al lado de manage.py (lo más probable según tus fotos)
+path1 = os.path.join(os.path.dirname(BASE_DIR), 'static')
+if os.path.exists(path1):
+    STATICFILES_DIRS.append(path1)
 
-# 3. Y por si acaso estuviera adentro de blog/
-STATICFILES_DIRS.append('/opt/render/project/src/blog/static')
+# Ruta 2: Adentro de la carpeta blog
+path2 = os.path.join(BASE_DIR, 'static')
+if os.path.exists(path2):
+    STATICFILES_DIRS.append(path2)
 
-print(f"Buscando estáticos en: {STATICFILES_DIRS}")
+# Debug para ver en el log qué carpetas REALMENTE existen
+print(f"--- DEBUG ESTÁTICOS ---")
+print(f"¿Existe Ruta 1 ({path1})?: {os.path.exists(path1)}")
+print(f"¿Existe Ruta 2 ({path2})?: {os.path.exists(path2)}")
+print(f"Contenido de {os.path.dirname(BASE_DIR)}: {os.listdir(os.path.dirname(BASE_DIR))}")
 
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
